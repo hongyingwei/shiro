@@ -41,6 +41,7 @@ public class ShiroTest {
 					System.out.println("logout!!");
 				}
 			}catch (Exception e) {
+				e.printStackTrace();
 				System.out.println("登录失败，账户信息错误！");
 			}
 		}
@@ -54,25 +55,25 @@ public class ShiroTest {
 		Subject subject = SecurityUtils.getSubject();
 
 		UsernamePasswordToken token =
-				new UsernamePasswordToken("zhang", "123");
+				new UsernamePasswordToken("woniu3", "123456");
 		try {
 			subject.login(token);
 			System.out.println("登录成功");
+			subject.logout();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("登录失败");
 		}
-		subject.logout();
 	}
 	@Test
 	public void testPermission() {
 		//获取subject,登录
-		Factory<SecurityManager> factory = new IniSecurityManagerFactory("classpath:shiro_permissions.ini");
+		Factory<SecurityManager> factory = new IniSecurityManagerFactory("classpath:shiro_permission.ini");
 		SecurityManager sm = factory.getInstance();
 		SecurityUtils.setSecurityManager(sm);
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token =
-				new UsernamePasswordToken("zhang", "123");
+				new UsernamePasswordToken("zhangsan", "123456");
 		subject.login(token);
 		//判断是否具有单个操作权限
 		Assert.assertTrue(subject.isPermitted("user:create"));
@@ -82,7 +83,7 @@ public class ShiroTest {
 		//检查是否具有某权限，没有则抛出异常
 		subject.checkPermission("user:create");
 		subject.checkPermissions(
-				"user:update","user:delete","user:view");
+				"user:update","user:delete","user:read");
 	}
 	@Test
 	public void testRole() {
