@@ -60,13 +60,13 @@
             <value>
             	<!-- 游客身份即可访问 -->
                 /login*=anon
-                /user/logout*=logout
+                /users/logout*=logout
                 <!-- 需要进行身份验证 -->
-                /user/index*=authc
+                /users/index*=authc
                 <!-- 需要具有对应角色 -->
-                /user/roles=roles[system]
+                /users/roles=roles[system]
                 <!-- 需要拥有相应权限 -->
-                /user/list*=perms["user:view"]
+                /users/list*=perms["user:view"]
             </value>
         </property>
     </bean>
