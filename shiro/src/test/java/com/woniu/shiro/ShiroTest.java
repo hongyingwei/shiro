@@ -4,9 +4,12 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.util.Factory;
+import org.junit.Assert;
 import org.junit.Test;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
+
+import java.util.Arrays;
 
 public class ShiroTest {
 
@@ -22,20 +25,24 @@ public class ShiroTest {
 		Subject subject = SecurityUtils.getSubject();
 		//创建用户名/密码验证Token
 		UsernamePasswordToken token =
-				new UsernamePasswordToken("zhang", "123");
+				new UsernamePasswordToken("zhang", "123456");
 		//判断用户是否已经登录
 		if(subject.isAuthenticated()) {
 			System.out.println(subject.getPrincipal()+" 已登录");
 		} else {
 			//进行登录
-			subject.login(token);
-			System.out.println(
-					subject.getPrincipal()+" login successful");
-		}
-		//退出登录
-		subject.logout();
-		if(subject.getPrincipal()==null) {
-			System.out.println("logout!!");
+			try {
+				subject.login(token);
+				System.out.println(
+						subject.getPrincipal()+" login successful");
+				//退出登录
+				subject.logout();
+				if(subject.getPrincipal()==null) {
+					System.out.println("logout!!");
+				}
+			}catch (Exception e) {
+				System.out.println("登录失败，账户信息错误！");
+			}
 		}
 	}
 
