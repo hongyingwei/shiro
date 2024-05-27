@@ -25,8 +25,8 @@ public class DBUtil {
 	static{
 		
 		try {
-			String path = DBUtil.class.getResource(".").getPath();
-			InputStream in = new FileInputStream(new File(path + "druid.properties"));
+			InputStream in = DBUtil.class.getClassLoader().getResourceAsStream("druid.properties");
+
 			Properties prop = new Properties();
 			prop.load(in);
 			
@@ -49,7 +49,7 @@ public class DBUtil {
 			druid.setDriverClassName(driveNamen);
 			druid.setUrl(url);
 			druid.setUsername(user);
-			druid.setPassword(Security.AES.decrypt(password, "woniu"));
+			druid.setPassword(password);
 			
 			
 			//连接池信息

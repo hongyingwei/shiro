@@ -39,6 +39,7 @@ public class LoginController {
 			session.setAttribute("error", error);
 			return "login.jsp";
 		}
+		session.setAttribute("username", username);
 		return "redirect:index";
 	}
 	//退出登录
